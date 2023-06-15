@@ -10,13 +10,11 @@ import re
 nodes = hou.selectedNodes()
 
 for node in nodes:
-    type = node.type().name()
 
     name = node.parm('filename').eval()
-
-    
-    #get color; rename version + texture name
-    version = re.sub('.*(?=v\d+)|(?<=v001).*','',name)
+ 
+    #get color
+    version = re.sub('.*(?=v\d+)|(?<=v(\d)(\d)(\d)).*','',name)
     name = re.sub('(\w\:)|(\w)*(\/)|(\w)*(\s)|(\.)|(tx)|(png)|(jpg)|(tif)|(exr)|(<udim>)','',name)
     name = version + '_' + name
     node.setName(name, unique_name=True)
