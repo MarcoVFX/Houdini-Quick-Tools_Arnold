@@ -1,0 +1,26 @@
+#name = Change to exr
+#label = Change to exr
+#icon = hicon:/SVGIcons.index?BUTTONS_colors.svg
+
+
+import re
+nodes = hou.selectedNodes()
+
+
+for node in nodes:
+    
+    #Rename to .exr path
+    name = node.parm('filename').eval()
+    path = re.sub('((tx)|(exr))$',"",name)
+    path += 'exr'
+    node.parm('filename').set(path)
+    
+    #Search for match criteria, set color
+    check = re.search("(SCRATCHMAP)|(NORMAL)|(BUMP)",name)
+    
+    if check:
+        node.setColor(hou.Color(0.4,0.4,0.8))   
+    else:
+        node.setColor(hou.Color(1,0.325,0))
+    
+    
