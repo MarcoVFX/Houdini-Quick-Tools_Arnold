@@ -1,0 +1,58 @@
+#name = tex version up
+#label = tex version up
+#icon = hicon:/SVGIcons.index?BUTTONS_list_warning_up.svg
+
+
+import re
+nodes = hou.selectedNodes()
+
+for node in nodes:
+
+    #Rename to .tx path
+    name = node.parm('filename').eval()
+    
+    pathf = re.sub('((?<=v(\d)(\d)(\d)).*)|(v\d+)',"",name)
+    pathr = re.sub('(v(\d)(\d)(\d))|.*(?=v\d+)',"",name)
+    
+    version = re.sub('.*(?=v\d+)|(?<=v(\d)(\d)(\d)).*','',name)
+    version = re.sub('v','', version)
+    version = int(version)
+    version += 1
+    version = str(version)
+    length = len(version)
+    
+    
+    if length == 1:
+        path = pathf + 'v' + '00' + version + pathr
+        node.parm('filename').set(path)
+        
+       
+    if length == 2:
+        path = pathf + 'v' + '0' + version + pathr
+        node.parm('filename').set(path)
+        
+    if length == 3:
+        path = pathf + 'v' + version + pathr
+        node.parm('filename').set(path)
+        
+        
+
+nodes = hou.selectedNodes()
+
+for node in nodes:
+
+    name = node.parm('filename').eval()
+ 
+    #get color
+    version = re.sub('.*(?=v\d+)|(?<=v(\d)(\d)(\d)).*','',name)
+    name = re.sub('(\w\:)|(\w)*(\/)|(\w)*(\s)|(\.)|(tx)|(png)|(jpg)|(tif)|(exr)|(<udim>)','',name)
+    name = version + '_' + name
+    node.setName(name, unique_name=True)
+    
+    #Search for match criteria, set color
+    check = re.search("(SCRATCHMAP)|(NORMAL)|(BUMP)",name)
+    
+    if check:
+        node.setColor(hou.Color(0.4,0.4,0.8))   
+    else:
+        node.setColor(hou.Color(1,0.325,0))    
