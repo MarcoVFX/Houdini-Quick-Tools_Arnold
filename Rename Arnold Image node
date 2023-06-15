@@ -1,0 +1,28 @@
+#name = NameImage
+#label = NameImage
+#icon = hicon:/SVGIcons.index?BUTTONS_comment_out.svg
+
+
+#Scipt by Marco Cheng
+#Automate Arnold node naming
+
+import re
+nodes = hou.selectedNodes()
+
+for node in nodes:
+    type = node.type().name()
+
+    name = node.parm('filename').eval()
+
+    
+    #get color
+    name = re.sub('(\w\:)|(\w)*(\/)|(\w)*(\s)|(\.)|(tx)|(png)|(jpg)|(tif)|(exr)|(<udim>)','',name)
+    node.setName(name, unique_name=True)
+    
+    #Search for match criteria, set color
+    check = re.search("(SCRATCHMAP)|(NORMAL)|(BUMP)",name)
+    
+    if check:
+        node.setColor(hou.Color(0.4,0.4,0.8))   
+    else:
+        node.setColor(hou.Color(1,0.325,0))
