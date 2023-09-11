@@ -1,0 +1,12 @@
+#name = debug textures
+#label = debug textures
+#icon = hicon:/SVGIcons.index?book.svg
+
+nodes = hou.selectedNodes()
+    
+for node in nodes:
+    parent = node.parent()
+    path = parent.path()
+    outmat = hou.node(path + "/OUT_material")
+    
+    outmat.setInput(0,node)
