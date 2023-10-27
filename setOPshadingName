@@ -1,0 +1,17 @@
+#name = setOPshadingName
+#label = setOPshadingName
+#icon = hicon:/SVGIcons.index?BUTTONS_clear.svg
+
+
+nodes = hou.selectedNodes()
+node = hou.pwd()
+
+for node in nodes:
+    name = node.name()
+    children = node.children()
+    
+    for child in children:
+        nodetype = child.type().name()
+
+        if (nodetype == "arnold_material"):
+            child.setName("OUT_" + name,unique_name=True)
