@@ -37,10 +37,7 @@ for node in nodes:
         #create last node
         lastNode = aovwrite
         iteration += 1;
-
-    
-        
-        
+       
 #layout  
 parent.layoutChildren(items=(nodeCollection))
 
