@@ -39,6 +39,5 @@ for node in nodes:
         
         
 #layout  
-
 parent.layoutChildren(items=(nodeCollection))
 
