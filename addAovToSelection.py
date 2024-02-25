@@ -8,6 +8,11 @@ nodeCollection = []
 
 for node in nodes:
     type = node.type().name()
+
+    if (type != "arnold::image"):
+        print ("You should NOT select any non-image nodes")
+        hou.ui.displayMessage("Failed: You should NOT select any non-image nodes!", title="You selected the wrong node!")
+        quit()
     
     if (type == "arnold::image"):
         #create AOV nodes
@@ -33,11 +38,10 @@ for node in nodes:
         lastNode = aovwrite
         iteration += 1;
 
-    if (type != "arnold::image"):
-        print ("You should NOT select any non-image nodes")
-        raise hou.NodeError("You should NOT select any non-image nodes!")
+    
         
         
 #layout  
 parent.layoutChildren(items=(nodeCollection))
+
 
